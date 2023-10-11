@@ -96,7 +96,7 @@ func (p *Provider) Create(ctx context.Context, nodeClass *v1beta1.EC2NodeClass, 
 		// cache was out-of-sync on the first try
 		fleetInstance, err = p.launchInstance(ctx, nodeClass, nodeClaim, instanceTypes, tags)
 	}
-	if err != nil {
+	if err != nil { 
 		return nil, err
 	}
 	return NewInstanceFromFleet(fleetInstance, tags), nil

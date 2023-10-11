@@ -53,12 +53,13 @@ func NewProvider(ec2api ec2iface.EC2API, cache *cache.Cache) *Provider {
 		cache: cache,
 		// inflightIPs is used to track IPs from known launched instances
 		inflightIPs: map[string]int64{},
-	}
+	} 
 }
 
 func (p *Provider) List(ctx context.Context, nodeClass *v1beta1.EC2NodeClass) ([]*ec2.Subnet, error) {
 	p.Lock()
 	defer p.Unlock()
+	// add all those tags and ids and stores it in filtersets
 	filterSets := getFilterSets(nodeClass.Spec.SubnetSelectorTerms)
 	if len(filterSets) == 0 {
 		return []*ec2.Subnet{}, nil

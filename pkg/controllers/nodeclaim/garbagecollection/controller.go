@@ -50,7 +50,7 @@ func NewController(kubeClient client.Client, cloudProvider *cloudprovider.CloudP
 	return &Controller{
 		kubeClient:      kubeClient,
 		cloudProvider:   cloudProvider,
-		successfulCount: 0,
+		successfulCount: 0, 
 		linkController:  linkController,
 	}
 }
@@ -68,6 +68,7 @@ func (c *Controller) Reconcile(ctx context.Context, _ reconcile.Request) (reconc
 		return reconcile.Result{}, fmt.Errorf("listing cloudprovider machines, %w", err)
 	}
 	managedRetrieved := lo.Filter(retrieved, func(nc *v1beta1.NodeClaim, _ int) bool {
+		// provisioner label
 		return nc.Annotations[v1beta1.ManagedByAnnotationKey] != "" && nc.DeletionTimestamp.IsZero()
 	})
 	nodeClaimList, err := nodeclaimutil.List(ctx, c.kubeClient)

@@ -52,7 +52,7 @@ func (c *Controller) updatePricing(ctx context.Context) error {
 	work := []func(ctx context.Context) error{
 		c.pricingProvider.UpdateOnDemandPricing,
 		c.pricingProvider.UpdateSpotPricing,
-	}
+	} 
 	errs := make([]error, len(work))
 	lop.ForEach(work, func(f func(ctx context.Context) error, i int) {
 		if err := f(ctx); err != nil {

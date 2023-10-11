@@ -113,7 +113,7 @@ func (c *Controller) link(ctx context.Context, retrieved *v1beta1.NodeClaim, exi
 		// a case where we want to provision a new machine
 		machine.Annotations = lo.Assign(machine.Annotations, map[string]string{
 			v1alpha5.MachineLinkedAnnotationKey: retrieved.Status.ProviderID,
-		})
+		}) 
 		if err := c.kubeClient.Create(ctx, machine); err != nil {
 			return err
 		}

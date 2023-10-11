@@ -1,7 +1,7 @@
 /*
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+You may obtain a copy of the License at 
 
     http://www.apache.org/licenses/LICENSE-2.0
 
@@ -70,7 +70,7 @@ func NewController(kubeClient client.Client, clk clock.Clock, recorder events.Re
 
 	return &Controller{
 		kubeClient:                kubeClient,
-		clk:                       clk,
+		clk:                        clk,
 		recorder:                  recorder,
 		sqsProvider:               sqsProvider,
 		unavailableOfferingsCache: unavailableOfferingsCache,
@@ -183,7 +183,7 @@ func (c *Controller) handleNodeClaim(ctx context.Context, msg messages.Message, 
 		ctx = logging.WithLogger(ctx, logging.FromContext(ctx).With("node", node.Name))
 	}
 
-	// Record metric and event for this action
+	// Record metric and event for this action 
 	c.notifyForMessage(msg, nodeClaim, node)
 	actionsPerformed.WithLabelValues(string(action)).Inc()
 

@@ -79,6 +79,7 @@ func (c *Controller) Reconcile(ctx context.Context, nodeClass *v1beta1.EC2NodeCl
 		controllerutil.AddFinalizer(nodeClass, v1beta1.TerminationFinalizer)
 	}
 	nodeClass.Annotations = lo.Assign(nodeClass.Annotations, nodeclassutil.HashAnnotation(nodeClass))
+	// here the status of nodeclass will be updated
 	err := multierr.Combine(
 		c.resolveSubnets(ctx, nodeClass),
 		c.resolveSecurityGroups(ctx, nodeClass),
@@ -260,7 +261,7 @@ func (c *NodeClassController) Builder(_ context.Context, m manager.Manager) core
 
 type NodeTemplateController struct {
 	*Controller
-}
+} 
 
 func NewNodeTemplateController(kubeClient client.Client, recorder events.Recorder, subnetProvider *subnet.Provider, securityGroupProvider *securitygroup.Provider,
 	amiProvider *amifamily.Provider, instanceProfileProvider *instanceprofile.Provider) corecontroller.Controller {

@@ -1,0 +1,6 @@
+what is providerId ---> its id of instance and u can fetch instance by it = fmt.Sprintf("aws:///%s/%s", i.Zone, i.ID)
+what sqs messages ---> it is for recieving spot interuptions and deleting nodes
+which part of code handles the controller after nodeclaim is deleted
+how settings are taken 
+scope of contexts 
+explore how cache handling and other stuffs related to that is happening 

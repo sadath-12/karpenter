@@ -100,7 +100,7 @@ func (s *SQSProvider) GetSQSMessages(ctx context.Context) ([]*sqs.Message, error
 	if err != nil {
 		return nil, fmt.Errorf("receiving sqs messages, %w", err)
 	}
-
+ 
 	return result.Messages, nil
 }
 

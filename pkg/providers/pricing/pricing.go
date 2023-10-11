@@ -214,7 +214,7 @@ func (p *Provider) fetchOnDemandPricing(ctx context.Context, additionalFilters .
 	filters := append([]*pricing.Filter{
 		{
 			Field: aws.String("regionCode"),
-			Type:  aws.String("TERM_MATCH"),
+			Type:  aws.String("TERM_MATCH"), 
 			Value: aws.String(p.region),
 		},
 		{
