@@ -1,0 +1,7 @@
+what is providerId ---> its id of instance and u can fetch instance by it = fmt.Sprintf("aws:///%s/%s", i.Zone, i.ID)
+what sqs messages ---> it is for recieving spot interuptions and deleting nodes
+which part of code handles the controller after nodeclaim is deleted --> karpenter will delete instance profile , k will delete node with that nodeclaim and its terminator will delete rest things and evict pods
+how settings are taken 
+scope of contexts 
+explore how cache handling and other stuffs related to that is happening 
+how eviction handles statefulsets and how other storage related things r handled ? ---> those volumes are already considered and added into  requirements
