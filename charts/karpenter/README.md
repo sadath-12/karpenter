@@ -34,16 +34,15 @@ helm upgrade --install --namespace karpenter --create-namespace \
 | affinity | object | `{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"karpenter.sh/provisioner-name","operator":"DoesNotExist"}]}]}},"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity rules for scheduling the pod. If an explicit label selector is not provided for pod affinity or pod anti-affinity one will be created from the pod selector labels. |
 | controller.env | list | `[]` | Additional environment variables for the controller pod. |
 | controller.envFrom | list | `[]` |  |
-| controller.errorOutputPaths | list | `["stderr"]` | Controller errorOutputPaths - default to stderr only |
+| controller.errorOutputPaths | list | `["stderr"]` | Controller errorOutputPaths - defaults to stderr only (Deprecated: Use logConfig.errorOutputPaths instead) |
 | controller.extraVolumeMounts | list | `[]` | Additional volumeMounts for the controller pod. |
 | controller.healthProbe.port | int | `8081` | The container port to use for http health probe. |
 | controller.image.digest | string | `"sha256:d29767fa9c5c0511a3812397c932f5735234f03a7a875575422b712d15e54a77"` | SHA256 digest of the controller image. |
 | controller.image.repository | string | `"public.ecr.aws/karpenter/controller"` | Repository path to the controller image. |
 | controller.image.tag | string | `"v0.31.0"` | Tag of the controller image. |
-| controller.logEncoding | string | `""` | Controller log encoding, defaults to the global log encoding |
-| controller.logLevel | string | `""` | Controller log level, defaults to the global log level |
+| controller.logLevel | string | `""` | Controller log level, defaults to the global log level (Deprecated: Use logConfig.logLevel.controller instead) |
 | controller.metrics.port | int | `8000` | The container port to use for metrics. |
-| controller.outputPaths | list | `["stdout"]` | Controller outputPaths - default to stdout only |
+| controller.outputPaths | list | `["stdout"]` | Controller outputPaths - defaults to stdout only (Deprecated: Use logConfig.outputPaths instead) |
 | controller.resources | object | `{}` | Resources for the controller pod. |
 | controller.sidecarContainer | list | `[]` | Additional sidecarContainer config |
 | controller.sidecarVolumeMounts | list | `[]` | Additional volumeMounts for the sidecar - this will be added to the volume mounts on top of extraVolumeMounts |
@@ -54,7 +53,13 @@ helm upgrade --install --namespace karpenter --create-namespace \
 | hostNetwork | bool | `false` | Bind the pod to the host network. This is required when using a custom CNI. |
 | imagePullPolicy | string | `"IfNotPresent"` | Image pull policy for Docker images. |
 | imagePullSecrets | list | `[]` | Image pull secrets for Docker images. |
-| logEncoding | string | `"console"` | Global log encoding |
+| logConfig | object | `{"enabled":true,"errorOutputPaths":["stderr"],"logEncoding":"console","logLevel":{"controller":"debug","global":"debug","webhook":"error"},"outputPaths":["stdout"]}` | Log configuration |
+| logConfig.enabled | bool | `true` | Whether to enable provisioning and mounting the log ConfigMap |
+| logConfig.errorOutputPaths | list | `["stderr"]` | Log errorOutputPaths - defaults to stderr only |
+| logConfig.logEncoding | string | `"console"` | Log encoding - defaults to console - must be one of 'json', 'console' |
+| logConfig.logLevel | object | `{"controller":"debug","global":"debug","webhook":"error"}` | Component-based log configuration |
+| logConfig.outputPaths | list | `["stdout"]` | Log outputPaths - defaults to stdout only |
+| logEncoding | string | `"console"` | Global log encoding (Deprecated: Use logConfig.logEncoding instead) |
 | logLevel | string | `"debug"` | Global log level |
 | nameOverride | string | `""` | Overrides the chart's name. |
 | nodeSelector | object | `{"kubernetes.io/os":"linux"}` | Node selectors to schedule the pod to nodes with labels. |
@@ -94,7 +99,7 @@ helm upgrade --install --namespace karpenter --create-namespace \
 | tolerations | list | `[{"key":"CriticalAddonsOnly","operator":"Exists"}]` | Tolerations to allow the pod to be scheduled to nodes with taints. |
 | topologySpreadConstraints | list | `[{"maxSkew":1,"topologyKey":"topology.kubernetes.io/zone","whenUnsatisfiable":"ScheduleAnyway"}]` | Topology spread constraints to increase the controller resilience by distributing pods across the cluster zones. If an explicit label selector is not provided one will be created from the pod selector labels. |
 | webhook.enabled | bool | `true` | Whether to enable the webhooks and webhook permissions. |
-| webhook.logLevel | string | `"error"` |  |
+| webhook.logLevel | string | `"error"` | Webhook log level (Deprecated: Use logConfig.logLevel.webhook instead) |
 | webhook.metrics.port | int | `8001` | The container port to use for webhook metrics. |
 | webhook.port | int | `8443` | The container port to use for the webhook. |
 
