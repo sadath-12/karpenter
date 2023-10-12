@@ -13,7 +13,7 @@ If additional configuration is required (say to use a specific AMI), we ask that
 2. Partially filled out launch templates are difficult to interpret. Anyone specifying a custom AMI to use will also need to explicitly specify how it needs to be bootstrapped via UserData. This is important because Karpenter cannot make guesses on how to start the kubelet on an unknown AMI.
 
 The main, critical downside of this approach has been that a user needs to maintain a fully-formed launch template even when they’re only looking to customize a single property of their worker nodes. Consider these examples -
-
+ 
 1. In order to override [the root volume](https://github.com/aws/karpenter/issues/885), you’d need to author an entire launch template containing security groups, userData etc.
 2. In order to just have all statically provisioned [volumes be encrypted](https://github.com/aws/karpenter/issues/933), you need to author an entire launch template.
 
